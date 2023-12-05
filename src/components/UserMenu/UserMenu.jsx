@@ -19,7 +19,7 @@ export const UserMenu = () => {
 				</NavItem>
 				<NavUserItem>
 					<UserItem>
-						Welcome, <UserName>{user.name}</UserName>
+						Welcome, <span>{user.avatarURL}</span> <UserName>{user.name}</UserName>
 					</UserItem>
 					<ButtonLogout
 						type='button'
