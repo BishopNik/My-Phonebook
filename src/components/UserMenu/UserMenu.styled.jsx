@@ -9,8 +9,8 @@ export const NavItem = styled(NavLink)`
 	text-decoration: none;
 	transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 	border-radius: 5px;
-	cursor: default;
-	pointer-events: none;
+	/* cursor: default; */
+	/* pointer-events: none; */
 	font-size: 16px;
 
 	@media screen and (min-width: 768px) {
