@@ -7,7 +7,10 @@ const initialState = {
 	user: { name: null, email: null },
 	token: null,
 	isLoggedIn: false,
+	isLogging: false,
 	isRefreshing: false,
+	isRegistering: false,
+	isRegistered: false,
 	error: null,
 };
 
@@ -23,25 +26,31 @@ const authSlice = createSlice({
 		builder
 			.addCase(register.pending, state => {
 				state.error = null;
+				state.isRegistering = true;
+				state.isRegistered = false;
 			})
 			.addCase(register.fulfilled, (state, { payload }) => {
 				state.user = payload.user;
-				state.token = payload.token;
-				state.isLoggedIn = true;
+				state.isRegistering = false;
+				state.isRegistered = true;
 			})
 			.addCase(register.rejected, (state, { payload }) => {
+				state.isRegistering = false;
 				if (payload) state.error = 'Error create user... Please change name or email.';
 			})
 			.addCase(logIn.pending, state => {
 				state.error = null;
+				state.isLogging = true;
 			})
 			.addCase(logIn.fulfilled, (state, { payload }) => {
 				state.user = payload.user;
 				state.token = payload.token;
 				state.isLoggedIn = true;
+				state.isLogging = false;
 			})
 			.addCase(logIn.rejected, (state, { payload }) => {
 				if (payload) state.error = 'Login error, please repeat.';
+				state.isLogging = false;
 			})
 			.addCase(logOut.pending, state => {
 				state.error = null;

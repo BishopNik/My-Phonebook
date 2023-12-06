@@ -89,12 +89,13 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { logIn } from 'redux/auth/operations';
 import { toastWindow } from 'components/Helpers';
+import { useAuth } from 'hooks';
 
 function Copyright(props) {
 	return (
 		<Typography variant='body2' color='text.secondary' align='center' {...props}>
 			{'Copyright © '}
-			<Link color='inherit' href='/goit-react-hw-08-phonebook/'>
+			<Link color='inherit' href='/my-phonebook/'>
 				My Phonebook
 			</Link>{' '}
 			{new Date().getFullYear()}
@@ -107,6 +108,7 @@ const defaultTheme = createTheme();
 
 const LoginForm = () => {
 	const dispatch = useDispatch();
+	const { isLogging } = useAuth();
 
 	const submitForm = values => {
 		if (!values.email || !values.password) {
@@ -168,7 +170,13 @@ const LoginForm = () => {
 							id='password'
 							autoComplete='current-password'
 						/>
-						<Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+						<Button
+							disabled={isLogging}
+							type='submit'
+							fullWidth
+							variant='contained'
+							sx={{ mt: 3, mb: 2 }}
+						>
 							Sign In
 						</Button>
 						<Grid container>

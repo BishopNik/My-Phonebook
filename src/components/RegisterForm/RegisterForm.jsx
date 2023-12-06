@@ -93,6 +93,7 @@
 // })(RegisterForm);
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -107,12 +108,14 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { register } from 'redux/auth/operations';
 import { toastWindow } from 'components/Helpers';
+import Loader from 'components/Loader';
+import { useAuth } from 'hooks';
 
 function Copyright(props) {
 	return (
 		<Typography variant='body2' color='text.secondary' align='center' {...props}>
 			{'Copyright © '}
-			<Link color='inherit' href='/goit-react-hw-08-phonebook/'>
+			<Link color='inherit' href='/my-phonebook/'>
 				My Phonebook
 			</Link>{' '}
 			{new Date().getFullYear()}
@@ -125,8 +128,10 @@ const defaultTheme = createTheme();
 
 const RegisterForm = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { statusRegistration, statusRegistrationProcess } = useAuth();
 
-	const submitForm = values => {
+	const submitForm = async values => {
 		if (!values.email || !values.password || !values.name) {
 			toastWindow('Please fill out all fields');
 			return;
@@ -135,14 +140,16 @@ const RegisterForm = () => {
 			toastWindow("Passwords don't match");
 			return;
 		}
-		dispatch(
+		await dispatch(
 			register({
 				name: values.name,
 				email: values.email,
 				password: values.password,
 			})
 		);
+		if (statusRegistration) navigate('/verify');
 	};
+
 	const handleSubmit = event => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -212,9 +219,19 @@ const RegisterForm = () => {
 							id='сonfirm_password'
 							autoComplete='current-password'
 						/>
-						<Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-							Sign up
+
+						<Button
+							disabled={statusRegistrationProcess}
+							type='submit'
+							fullWidth
+							variant='contained'
+							sx={{ mt: 3, mb: 2 }}
+						>
+							Register
 						</Button>
+
+						{statusRegistrationProcess ? <Loader /> : null}
+
 						<Grid container>
 							<Grid item>
 								<Link href='login' variant='body2'>
@@ -224,6 +241,7 @@ const RegisterForm = () => {
 						</Grid>
 					</Box>
 				</Box>
+
 				<Copyright sx={{ mt: 8, mb: 4 }} />
 			</Container>
 		</ThemeProvider>

@@ -55,8 +55,10 @@ export const NavMenu = styled.nav`
 	}
 `;
 
-export const UserItem = styled.p`
-	text-align: center;
+export const UserItem = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 8px;
 	margin: 0;
 	padding: 0;
 	font-size: 16px;
@@ -93,4 +95,10 @@ export const ButtonLogout = styled.button`
 		font-weight: 600;
 		padding: 5px 10px;
 	}
+`;
+
+export const UserAvatar = styled.img`
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
 `;

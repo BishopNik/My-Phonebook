@@ -5,7 +5,15 @@ import { logOut } from 'redux/auth/operations';
 import { useAuth } from 'hooks';
 import { animationButton } from '../Helpers';
 
-import { NavItem, NavMenu, NavUserItem, UserItem, UserName, ButtonLogout } from './UserMenu.styled';
+import {
+	NavItem,
+	NavMenu,
+	NavUserItem,
+	UserItem,
+	UserName,
+	ButtonLogout,
+	UserAvatar,
+} from './UserMenu.styled';
 
 export const UserMenu = () => {
 	const dispatch = useDispatch();
@@ -19,7 +27,8 @@ export const UserMenu = () => {
 				</NavItem>
 				<NavUserItem>
 					<UserItem>
-						Welcome, <span>{user.avatarURL}</span> <UserName>{user.name}</UserName>
+						Welcome, <UserAvatar src={user.avatarURL} />
+						<UserName>{user.name}</UserName>
 					</UserItem>
 					<ButtonLogout
 						type='button'

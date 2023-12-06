@@ -61,3 +61,30 @@ export const FormBox = styled.form`
 	margin-left: auto;
 	margin-right: auto;
 `;
+
+export const TextBox = styled.ul`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 25px;
+	padding: 35px 15px;
+	border-radius: 12px;
+	border: 0.5px solid black;
+	max-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	list-style: none;
+`;
+
+export const User = styled.span`
+	font-weight: 700;
+	color: crimson;
+`;
+
+export const Text = styled.li`
+	text-align: justify;
+`;
+
+export const Redirect = styled.li`
+	font-size: 12px;
+`;

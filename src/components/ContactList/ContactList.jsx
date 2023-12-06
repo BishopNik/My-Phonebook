@@ -36,9 +36,9 @@ function ContactList() {
 
 	return (
 		<ContactsBox>
-			{filteredContacts?.map(({ id, name, number }) => (
-				<ContactContainer key={id}>
-					<Contact id={id} name={name} number={number} />
+			{filteredContacts?.map(({ _id, name, number }) => (
+				<ContactContainer key={_id}>
+					<Contact id={_id} name={name} number={number} />
 				</ContactContainer>
 			))}
 		</ContactsBox>

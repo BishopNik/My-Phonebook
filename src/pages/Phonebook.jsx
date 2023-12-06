@@ -7,7 +7,7 @@ import { resetError } from 'redux/contacts/contactsSlice';
 import Filter from 'components/Filter';
 import ContactList from 'components/ContactList';
 import ContactForm from 'components/ContactForm';
-import { TitleName, FormBox } from './App.styled';
+import { TitleName, FormBox } from 'components/App.styled';
 import { Container } from 'styled/shared.styled';
 import { toastWindow } from 'components/Helpers';
 

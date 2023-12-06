@@ -17,6 +17,7 @@ import { toastWindow } from 'components/Helpers';
 const Phonebook = lazy(() => import('pages/Phonebook'));
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
+const Verify = lazy(() => import('pages/Verify'));
 
 function App() {
 	const dispatch = useDispatch();
@@ -52,6 +53,10 @@ function App() {
 					<Route
 						path='/login'
 						element={<RestrictedRoute redirectTo='/phonebook' component={<Login />} />}
+					/>
+					<Route
+						path='/verify'
+						element={<RestrictedRoute redirectTo='/phonebook' component={<Verify />} />}
 					/>
 				</Route>
 			</Routes>
