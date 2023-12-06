@@ -234,8 +234,8 @@ const RegisterForm = () => {
 
 						<Grid container>
 							<Grid item>
-								<Link href='login' variant='body2'>
-									{'Do have you an account? Sign In'}
+								<Link href='resend' variant='body2'>
+									{'Resend confirmation email'}
 								</Link>
 							</Grid>
 						</Grid>

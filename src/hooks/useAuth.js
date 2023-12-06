@@ -8,6 +8,9 @@ import {
 	selectIsRegistration,
 	selectIsRegistering,
 	selectIsLogging,
+	selectStatusResend,
+	selectIsResend,
+	statusUserError,
 } from 'redux/auth/selectors';
 
 export const useAuth = () => {
@@ -17,6 +20,9 @@ export const useAuth = () => {
 	const statusRegistration = useSelector(selectIsRegistration);
 	const statusRegistrationProcess = useSelector(selectIsRegistering);
 	const isLogging = useSelector(selectIsLogging);
+	const statusResend = useSelector(selectStatusResend);
+	const isResend = useSelector(selectIsResend);
+	const errorUser = useSelector(statusUserError);
 
 	return {
 		isLoggedIn,
@@ -25,5 +31,8 @@ export const useAuth = () => {
 		statusRegistration,
 		statusRegistrationProcess,
 		isLogging,
+		statusResend,
+		isResend,
+		errorUser,
 	};
 };

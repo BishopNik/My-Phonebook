@@ -2,7 +2,7 @@
 
 import { Toaster } from 'react-hot-toast';
 import { useEffect, lazy } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { refreshUser } from 'redux/auth/operations';
 import { Routes, Route } from 'react-router-dom';
 import { useAuth } from 'hooks';
@@ -10,7 +10,6 @@ import { PrivateRoute } from './PrivateRoute';
 import { RestrictedRoute } from './RestrictedRoute';
 import SharedLayout from './SharedLayout';
 import Loader from 'components/Loader';
-import { statusUserError } from 'redux/auth/selectors';
 import { resetError } from 'redux/auth/authSlice';
 import { toastWindow } from 'components/Helpers';
 
@@ -18,11 +17,11 @@ const Phonebook = lazy(() => import('pages/Phonebook'));
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
 const Verify = lazy(() => import('pages/Verify'));
+const ResendConfirmEmail = lazy(() => import('pages/ResendConfirmEmail'));
 
 function App() {
 	const dispatch = useDispatch();
-	const { isRefreshing } = useAuth();
-	const errorUser = useSelector(statusUserError);
+	const { isRefreshing, errorUser } = useAuth();
 
 	useEffect(() => {
 		dispatch(refreshUser());
@@ -57,6 +56,15 @@ function App() {
 					<Route
 						path='/verify'
 						element={<RestrictedRoute redirectTo='/phonebook' component={<Verify />} />}
+					/>
+					<Route
+						path='/resend'
+						element={
+							<RestrictedRoute
+								redirectTo='/phonebook'
+								component={<ResendConfirmEmail />}
+							/>
+						}
 					/>
 				</Route>
 			</Routes>

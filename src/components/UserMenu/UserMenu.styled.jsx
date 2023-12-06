@@ -42,8 +42,7 @@ export const NavMenu = styled.nav`
 	justify-content: space-between;
 	margin-bottom: 40px;
 	padding: 6px 10px;
-	border-bottom: 1px solid black;
-	box-shadow: 0px 0px 5px 0px gray;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.23);
 	font-size: 20px;
 	font-weight: 600;
 	color: darkblue;
