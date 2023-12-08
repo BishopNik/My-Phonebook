@@ -19,27 +19,42 @@ import {
 } from './Modal.styled';
 import { Button } from 'styled/shared.styled';
 import { fetchPutContact } from 'redux/contacts/fetchApi';
-import { checkContact, toastWindow, schema } from '../Helpers';
+import { checkContact, toastWindow, schema, getGenderIcon } from '../Helpers';
 
 Modal.setAppElement('#modal-root');
 
-const ModalWindow = ({ modalIsOpen, closeModal, deleteContact, contact, sex }) => {
+const ModalWindow = ({ modalIsOpen, closeModal, deleteContact, contact }) => {
 	const dispatch = useDispatch();
 	const contacts = useSelector(contactsState);
 	const error = useSelector(statusError);
-	const [editContact, setEditContact] = useState({ id: '', name: '', number: '' });
+	const [editContact, setEditContact] = useState({
+		_id: '',
+		name: '',
+		phone: '',
+		email: '',
+		gender: '',
+	});
 	const [editEnable, setEditEnable] = useState(false);
 	const [cancelEditContact, setCancelEditContact] = useState(false);
 	const nameInput = useRef(null);
-	const numberInput = useRef(null);
+	const emailInput = useRef(null);
+	const phoneInput = useRef(null);
 	const cancelPutContact = useRef(null);
 	const statusLoading = useSelector(statusLoadingState);
-	let avatarComponent;
+
+	const { _id, name, phone, email, gender } = contact;
+	const avatarComponent = <Avatar>{getGenderIcon(gender)}</Avatar>;
+
+	const idle = !editEnable && !cancelEditContact;
+	const edit = editEnable && !cancelEditContact;
+
 	const formik = useFormik({
 		initialValues: {
-			id: contact.id,
-			name: contact.name,
-			number: contact.number,
+			_id,
+			name,
+			phone,
+			email,
+			gender,
 		},
 		onSubmit: contact => {
 			handlePutContact(contact);
@@ -52,9 +67,19 @@ const ModalWindow = ({ modalIsOpen, closeModal, deleteContact, contact, sex }) =
 		}
 		if (error) {
 			formik.setFieldValue('name', editContact.name);
-			formik.setFieldValue('number', editContact.number);
+			formik.setFieldValue('phone', editContact.phone);
+			formik.setFieldValue('email', editContact.email);
+			formik.setFieldValue('gender', editContact.gender);
 		}
-	}, [editContact.name, editContact.number, error, formik, statusLoading]);
+	}, [
+		editContact.email,
+		editContact.gender,
+		editContact.name,
+		editContact.phone,
+		error,
+		formik,
+		statusLoading,
+	]);
 
 	useEffect(() => {
 		if (!nameInput.current) {
@@ -63,12 +88,14 @@ const ModalWindow = ({ modalIsOpen, closeModal, deleteContact, contact, sex }) =
 
 		if (editEnable) {
 			setEditContact(contact);
-			nameInput.current.style = 'background-color: #f7f0fe;';
-			numberInput.current.style = 'background-color: #f7f0fe;';
+			nameInput.current.style = 'background-color: #fcfcfc;';
+			emailInput.current.style = 'background-color: #fcfcfc;';
+			phoneInput.current.style = 'background-color: #fcfcfc;';
 			nameInput.current.focus();
 		} else {
 			nameInput.current.style = 'background-color: transparent;';
-			numberInput.current.style = 'background-color: transparent;';
+			emailInput.current.style = 'background-color: transparent;';
+			phoneInput.current.style = 'background-color: transparent;';
 		}
 	}, [contact, editEnable]);
 
@@ -81,13 +108,11 @@ const ModalWindow = ({ modalIsOpen, closeModal, deleteContact, contact, sex }) =
 		schema
 			.validate(contact)
 			.then(() => {
-				const name = `${contact.name}&${sex}`;
-				const status = checkContact(contacts, contact.name, contact.id);
+				const { _id, name } = contact;
+				const status = checkContact(contacts, name, _id);
 				if (!status) {
 					setEditEnable(false);
-					cancelPutContact.current = dispatch(
-						fetchPutContact({ id: contact.id, name, number: contact.number })
-					);
+					cancelPutContact.current = dispatch(fetchPutContact(contact));
 					setCancelEditContact(true);
 				} else toastWindow(`Please change contacts.`);
 			})
@@ -98,34 +123,15 @@ const ModalWindow = ({ modalIsOpen, closeModal, deleteContact, contact, sex }) =
 
 	const handleCancelEditContact = () => {
 		setEditEnable(false);
-		formik.setFieldValue('name', editContact.name);
-		formik.setFieldValue('number', editContact.number);
+		formik.setFieldValue('name', name);
+		formik.setFieldValue('phone', phone);
+		formik.setFieldValue('email', email);
 	};
 
-	const idle = !editEnable && !cancelEditContact;
-	const edit = editEnable && !cancelEditContact;
-
-	switch (sex) {
-		case 'male':
-			avatarComponent = <Avatar>👨🏻</Avatar>;
-			break;
-		case 'female':
-			avatarComponent = <Avatar>👩🏻</Avatar>;
-			break;
-		case 'bussines':
-			avatarComponent = <Avatar>🏢</Avatar>;
-			break;
-		case 'other':
-			avatarComponent = <Avatar>👤</Avatar>;
-			break;
-
-		default:
-			avatarComponent = <Avatar>❔</Avatar>;
-	}
-
 	const afterOpenModal = () => {
-		formik.setFieldValue('name', contact.name);
-		formik.setFieldValue('number', contact.number);
+		formik.setFieldValue('name', name);
+		formik.setFieldValue('phone', phone);
+		formik.setFieldValue('email', email);
 	};
 
 	const handleModalClose = () => {
@@ -144,9 +150,11 @@ const ModalWindow = ({ modalIsOpen, closeModal, deleteContact, contact, sex }) =
 			>
 				<Formik
 					initialValues={{
-						id: formik.values.id,
+						_id: formik.values._id,
 						name: formik.values.name,
-						number: formik.values.number,
+						phone: formik.values.phone,
+						email: formik.values.email,
+						gender: formik.values.gender,
 					}}
 					onSubmit={formik.handleSubmit}
 				>
@@ -162,12 +170,21 @@ const ModalWindow = ({ modalIsOpen, closeModal, deleteContact, contact, sex }) =
 										disabled={!editEnable}
 									/>
 								</Label>
-								<Label ref={numberInput}>
-									<LabelName>Number:</LabelName>
+								<Label ref={emailInput}>
+									<LabelName>Email:</LabelName>
 									<ContactInput
-										name='number'
+										name='email'
+										type='email'
+										{...formik.getFieldProps('email')}
+										disabled={!editEnable}
+									/>
+								</Label>
+								<Label ref={phoneInput}>
+									<LabelName>Phone:</LabelName>
+									<ContactInput
+										name='phone'
 										type='tel'
-										{...formik.getFieldProps('number')}
+										{...formik.getFieldProps('phone')}
 										disabled={!editEnable}
 									/>
 								</Label>
@@ -211,7 +228,7 @@ const ModalWindow = ({ modalIsOpen, closeModal, deleteContact, contact, sex }) =
 							</Button>
 
 							<Button
-								id={contact.id}
+								id={_id}
 								type='button'
 								disabled={statusLoading}
 								onClick={deleteContact}

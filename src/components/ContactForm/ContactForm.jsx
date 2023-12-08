@@ -13,6 +13,7 @@ import {
 	SelectFormik,
 	AddButton,
 	CancelButton,
+	ButtonDiv,
 } from './ContactForm.styled.jsx';
 
 function ContactForm({ onSubmitForm }) {
@@ -20,29 +21,28 @@ function ContactForm({ onSubmitForm }) {
 	const contacts = useSelector(contactsState);
 	const statusLoading = useSelector(statusLoadingState);
 	const cancelAddContact = useRef(null);
-	const [selectedGender, setSelectedGender] = useState('');
+	const [gender, setGender] = useState('other');
 
 	const handleGenderChange = ({ target }) => {
-		const newGender = target.value;
-		setSelectedGender(newGender);
+		setGender(target.value);
 	};
 
-	const handleAddContact = ({ name, number }) => {
-		const nameValue = `${name}&${selectedGender}`;
-		const status = checkContact(contacts, nameValue);
+	const handleAddContact = ({ name, email, phone }) => {
+		const status = checkContact(contacts, name);
 		if (!status) {
-			cancelAddContact.current = dispatch(fetchPostContact({ name: nameValue, number }));
+			cancelAddContact.current = dispatch(fetchPostContact({ name, gender, email, phone }));
 		} else toastWindow(`${name} is already in contacts.`);
 		return status;
 	};
 
 	const handleSubmit = async (contact, actions) => {
 		try {
-			await schema.validate(contact);
-			const status = handleAddContact(contact);
+			const newContact = { ...contact, gender };
+			await schema.validate(newContact);
+			const status = handleAddContact(newContact);
 			if (!status) {
 				actions.resetForm();
-				setSelectedGender('other');
+				setGender('other');
 			}
 		} catch (validationErrors) {
 			toastWindow(`Error: ${validationErrors.errors}`);
@@ -54,7 +54,8 @@ function ContactForm({ onSubmitForm }) {
 			<Formik
 				initialValues={{
 					name: '',
-					number: '',
+					email: '',
+					phone: '',
 				}}
 				onSubmit={handleSubmit}
 			>
@@ -73,20 +74,22 @@ function ContactForm({ onSubmitForm }) {
 					</Label>
 
 					<Label>
-						Gender
-						<SelectFormik value={selectedGender} onChange={handleGenderChange}>
-							<option value='other'>Other</option>
-							<option value='male'>Male</option>
-							<option value='female'>Female</option>
-							<option value='bussines'>Вussines</option>
-						</SelectFormik>
+						Email
+						<InputFormik
+							type='text'
+							name='email'
+							title='Please enter a valid email address.'
+							required
+							autoComplete='off'
+							placeholder='aneta@gmail.com'
+						/>
 					</Label>
 
 					<Label>
-						Number
+						Phone
 						<InputFormik
 							type='tel'
-							name='number'
+							name='phone'
 							pattern='\+?\d{1,4}[\-.\s]?\(?\d{1,3}\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}'
 							title='Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
 							required
@@ -94,20 +97,31 @@ function ContactForm({ onSubmitForm }) {
 							placeholder='48-787-453-876'
 						/>
 					</Label>
+					<ButtonDiv>
+						<Label>
+							Gender
+							<SelectFormik value={gender} onChange={handleGenderChange}>
+								<option value='other'>Other</option>
+								<option value='male'>Male</option>
+								<option value='female'>Female</option>
+								<option value='business'>Вusiness</option>
+							</SelectFormik>
+						</Label>
 
-					<AddButton type='submit' onClick={animationButton} disabled={statusLoading}>
-						Add contact
-					</AddButton>
-					<CancelButton
-						type='button'
-						disabled={!statusLoading}
-						onClick={e => {
-							animationButton(e);
-							cancelAddContact.current?.abort();
-						}}
-					>
-						❌
-					</CancelButton>
+						<AddButton type='submit' onClick={animationButton} disabled={statusLoading}>
+							Add contact
+						</AddButton>
+						<CancelButton
+							type='button'
+							disabled={!statusLoading}
+							onClick={e => {
+								animationButton(e);
+								cancelAddContact.current?.abort();
+							}}
+						>
+							❌
+						</CancelButton>
+					</ButtonDiv>
 				</FormikContact>
 			</Formik>
 		</>

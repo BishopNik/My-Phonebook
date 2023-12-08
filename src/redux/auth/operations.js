@@ -4,6 +4,7 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 axios.defaults.baseURL = 'https://nodejs-rest-api-8x2z.onrender.com/';
+// axios.defaults.baseURL = 'http://localhost:4000';
 
 // Utility to add JWT
 const setAuthHeader = token => {
@@ -20,8 +21,8 @@ export const register = createAsyncThunk('auth/register', async (credentials, th
 		const res = await axios.post('/api/auth/register', credentials);
 
 		return res.data;
-	} catch (error) {
-		return thunkAPI.rejectWithValue(error.message);
+	} catch ({ response }) {
+		return thunkAPI.rejectWithValue(response?.data?.message);
 	}
 });
 
@@ -31,8 +32,8 @@ export const logIn = createAsyncThunk('auth/login', async (credentials, thunkAPI
 		// After successful login, add the token to the HTTP header
 		setAuthHeader(res.data.token);
 		return res.data;
-	} catch (error) {
-		return thunkAPI.rejectWithValue(error.message);
+	} catch ({ response }) {
+		return thunkAPI.rejectWithValue(response?.data?.message);
 	}
 });
 
@@ -41,8 +42,8 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 		await axios.post('/api/auth/logout');
 		// After a successful logout, remove the token from the HTTP header
 		clearAuthHeader();
-	} catch (error) {
-		return thunkAPI.rejectWithValue(error.message);
+	} catch ({ response }) {
+		return thunkAPI.rejectWithValue(response?.data?.message);
 	}
 });
 
@@ -61,15 +62,15 @@ export const refreshUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) 
 		setAuthHeader(persistedToken);
 		const res = await axios.get('/api/auth/current');
 		return res.data;
-	} catch (error) {
-		return thunkAPI.rejectWithValue(error.message);
+	} catch ({ response }) {
+		return thunkAPI.rejectWithValue(response?.data?.message);
 	}
 });
 
 export const resendEmail = createAsyncThunk('auth/verify', async (credentials, thunkAPI) => {
 	try {
 		await axios.post('/api/auth/verify', credentials);
-	} catch (error) {
-		return thunkAPI.rejectWithValue(error.message);
+	} catch ({ response }) {
+		return thunkAPI.rejectWithValue(response?.data?.message);
 	}
 });

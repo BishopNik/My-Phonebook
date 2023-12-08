@@ -12,23 +12,25 @@ export const fetchAllContacts = createAsyncThunk('tasks/fetchAll', async (_, thu
 	}
 });
 
-export const fetchPostContact = createAsyncThunk(
-	'tasks/fetchPost',
-	async ({ name, number }, thunkAPI) => {
-		try {
-			const response = await axios.post('/api/contacts', { name, number });
-			return response.data;
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.message);
-		}
+export const fetchPostContact = createAsyncThunk('tasks/fetchPost', async (contact, thunkAPI) => {
+	try {
+		const response = await axios.post('/api/contacts', contact);
+		return response.data;
+	} catch (error) {
+		return thunkAPI.rejectWithValue(error.message);
 	}
-);
+});
 
 export const fetchPutContact = createAsyncThunk(
 	'tasks/fetchPut',
-	async ({ id, name, number }, thunkAPI) => {
+	async ({ _id, name, gender, email, phone }, thunkAPI) => {
 		try {
-			const response = await axios.patch(`/api/contacts/${id}`, { name, number });
+			const response = await axios.put(`/api/contacts/${_id}`, {
+				name,
+				gender,
+				email,
+				phone,
+			});
 			return response.data;
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.message);

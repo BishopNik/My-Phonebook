@@ -31,16 +31,16 @@ export const TitleName = styled.h2`
 `;
 
 export const FormBox = styled.div`
-	width: 340px;
+	width: 330px;
 	margin-left: auto;
 	margin-right: auto;
 
 	@media screen and (min-width: 768px) {
-		width: 650px;
+		width: 550px;
 	}
 
 	@media screen and (min-width: 1279px) {
-		width: 750px;
+		width: 650px;
 	}
 `;
 

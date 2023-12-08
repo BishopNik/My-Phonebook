@@ -10,10 +10,10 @@ export const FormBox = styled(Form)`
 	justify-content: center;
 	align-items: flex-start;
 	gap: ${p => p.theme.spacing(3)};
-	padding-top: 10px;
 
 	@media screen and (min-width: 768px) {
-		width: 500px;
+		width: 650px;
+		padding-top: 10px;
 	}
 `;
 
@@ -23,10 +23,10 @@ export const ButtonsContainer = styled.div`
 	margin-left: auto;
 	margin-right: auto;
 	padding-top: 10px;
-	padding-bottom: 20px;
 
 	@media screen and (min-width: 768px) {
 		gap: 24px;
+		padding-bottom: 20px;
 	}
 `;
 
@@ -34,12 +34,13 @@ export const ContactBox = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 	margin-left: auto;
 	margin-right: auto;
 
 	@media screen and (min-width: 768px) {
 		gap: 20px;
+		margin-bottom: 30px;
 	}
 `;
 
@@ -54,7 +55,7 @@ export const ContactInput = styled(Field)`
 	width: 170px;
 	margin: 0;
 	margin-right: auto;
-	padding: ${p => p.theme.spacing(3)} ${p => p.theme.spacing(2)};
+	padding: ${p => p.theme.spacing(1)} ${p => p.theme.spacing(1)};
 	font-size: 18px;
 	color: darkblue;
 	border: none;
@@ -63,8 +64,9 @@ export const ContactInput = styled(Field)`
 	cursor: inherit;
 
 	@media screen and (min-width: 768px) {
+		padding: ${p => p.theme.spacing(3)} ${p => p.theme.spacing(2)};
 		font-size: 22px;
-		width: 205px;
+		width: 405px;
 	}
 
 	&:focus {
@@ -116,7 +118,7 @@ export const customStyles = {
 		bottom: 'auto',
 		marginRight: '-50%',
 		transform: 'translate(-50%, -50%)',
-		backgroundColor: 'oldlace',
+		backgroundColor: 'whitesmoke',
 		borderRadius: '8px',
 	},
 };

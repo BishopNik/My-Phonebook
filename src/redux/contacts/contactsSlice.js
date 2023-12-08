@@ -40,7 +40,7 @@ export const contactsSlice = createSlice({
 			.addCase(fetchDelContact.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
 				state.error = null;
-				state.items = state.items.filter(item => item.id !== payload.id);
+				state.items = state.items.filter(item => item._id !== payload.id);
 			})
 			.addCase(fetchDelContact.rejected, (state, { error }) => {
 				state.isLoading = false;
@@ -67,7 +67,7 @@ export const contactsSlice = createSlice({
 				state.isLoading = false;
 				state.error = null;
 				state.items = state.items.map(item => {
-					if (item.id === payload.id) return payload;
+					if (item._id === payload._id) return payload;
 					return item;
 				});
 			})

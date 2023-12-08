@@ -10,6 +10,7 @@ export const ContactsBox = styled.ul`
 	justify-content: flex-start;
 	align-items: center;
 	padding: 0;
+	padding-bottom: 40px;
 `;
 
 export const ContactContainer = styled.li`
@@ -18,7 +19,7 @@ export const ContactContainer = styled.li`
 	outline: 1px solid lightgray;
 	border-radius: 8px;
 	box-shadow: 0px 0px 4px 2px rgba(128, 128, 128, 0.5);
-	background-color: ivory;
+	background-color: #fafaf7;
 
 	@media screen and (max-width: 767px) {
 		width: 97%;
