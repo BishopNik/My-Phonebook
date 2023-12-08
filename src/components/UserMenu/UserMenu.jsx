@@ -27,7 +27,7 @@ export const UserMenu = () => {
 				</NavItem>
 				<NavUserItem>
 					<UserItem>
-						Welcome, <UserAvatar src={user.avatarURL} />
+						<UserAvatar src={user.avatarURL} />
 						<UserName>{user.name}</UserName>
 					</UserItem>
 					<ButtonLogout
