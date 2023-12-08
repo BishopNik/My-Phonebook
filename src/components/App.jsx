@@ -38,11 +38,11 @@ function App() {
 		<>
 			<Routes>
 				<Route path='/' element={<SharedLayout />}>
+					<Route index element={<Login />} />
 					<Route
 						path='/phonebook'
 						element={<PrivateRoute redirectTo='/login' component={<Phonebook />} />}
 					/>
-					<Route index element={<Login />} />
 					<Route
 						path='/register'
 						element={
