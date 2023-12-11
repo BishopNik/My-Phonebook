@@ -4,7 +4,7 @@ import { Container } from 'styled/shared.styled';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'hooks';
-import { TextBox, Text, User, Redirect } from '../styled/shared.styled';
+import { TextBox, Text, User, Redirect } from 'styled/shared.styled';
 
 const Verify = () => {
 	const [countdown, setCountdown] = useState(10);

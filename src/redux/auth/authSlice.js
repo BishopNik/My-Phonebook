@@ -1,10 +1,20 @@
 /** @format */
 
 import { createSlice } from '@reduxjs/toolkit';
-import { register, logIn, logOut, refreshUser, resendEmail } from './operations';
+import {
+	register,
+	logIn,
+	logOut,
+	refreshUser,
+	resendEmail,
+	changeAvatar,
+	changeName,
+	changePassword,
+	deleteUser,
+} from './operations';
 
 const initialState = {
-	user: { name: null, email: null },
+	user: { id: null, name: null, email: null, avatarURL: null },
 	token: null,
 	isLoggedIn: false,
 	isLogging: false,
@@ -80,13 +90,62 @@ const authSlice = createSlice({
 			.addCase(resendEmail.pending, state => {
 				state.statusResend = true;
 			})
-			.addCase(resendEmail.fulfilled, (state, { payload }) => {
+			.addCase(resendEmail.fulfilled, state => {
 				state.isResend = true;
 				state.statusResend = false;
 			})
 			.addCase(resendEmail.rejected, (state, { payload }) => {
 				state.statusResend = false;
 				state.error = payload;
+			})
+			.addCase(changeAvatar.pending, state => {
+				state.statusResend = true;
+			})
+			.addCase(changeAvatar.fulfilled, (state, { payload }) => {
+				state.isResend = true;
+				state.statusResend = false;
+				state.user.avatarURL = payload.avatarURL;
+			})
+			.addCase(changeAvatar.rejected, (state, { payload }) => {
+				state.statusResend = false;
+				state.error = payload;
+			})
+			.addCase(changeName.pending, state => {
+				state.error = null;
+				state.isLogging = true;
+			})
+			.addCase(changeName.fulfilled, (state, { payload }) => {
+				state.isLoggedIn = true;
+				state.isLogging = false;
+				state.user.name = payload.user.name;
+			})
+			.addCase(changeName.rejected, (state, { payload }) => {
+				state.isLogging = false;
+				state.error = payload;
+			})
+			.addCase(changePassword.pending, state => {
+				state.error = null;
+				state.isLogging = true;
+			})
+			.addCase(changePassword.fulfilled, (state, { payload }) => {
+				state.isLoggedIn = true;
+				state.isLogging = false;
+				state.user = payload.user;
+				state.token = payload.token;
+			})
+			.addCase(changePassword.rejected, (state, { payload }) => {
+				state.isLogging = false;
+				state.error = payload;
+			})
+			.addCase(deleteUser.pending, state => {
+				state.error = null;
+			})
+			.addCase(deleteUser.fulfilled, (state, { payload }) => {
+				state.user = { name: null, email: null };
+				state.token = null;
+			})
+			.addCase(deleteUser.rejected, (state, { payload }) => {
+				state.error = 'Delete user error...';
 			});
 	},
 });

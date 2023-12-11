@@ -1,23 +1,52 @@
 /** @format */
 
-import { useDispatch } from 'react-redux';
-import { logOut } from 'redux/auth/operations';
 import { useAuth } from 'hooks';
-import { animationButton } from '../Helpers';
+import Menu from 'components/Menu';
 
-import {
-	NavItem,
-	NavMenu,
-	NavUserItem,
-	UserItem,
-	UserName,
-	ButtonLogout,
-	UserAvatar,
-} from './UserMenu.styled';
+import { NavItem, NavMenu, UserAvatar } from './UserMenu.styled';
+import { useEffect, useState, useCallback } from 'react';
 
 export const UserMenu = () => {
-	const dispatch = useDispatch();
+	const [isOpen, setIsOpen] = useState(false);
 	const { user } = useAuth();
+
+	const onEscHandler = useCallback(
+		({ key }) => {
+			if (key === 'Escape') {
+				setIsOpen(false);
+			}
+		},
+		[setIsOpen]
+	);
+
+	const closeMenu = useCallback(
+		({ target }) => {
+			const menuContainer = document.getElementById('menu');
+			const avatarMenu = document.getElementById('avatar_menu');
+			if (
+				menuContainer &&
+				!menuContainer?.contains(target) &&
+				!avatarMenu?.contains(target)
+			) {
+				setIsOpen(false);
+			}
+		},
+		[setIsOpen]
+	);
+
+	useEffect(() => {
+		document.addEventListener('keydown', onEscHandler);
+		document.addEventListener('click', closeMenu);
+
+		return () => {
+			document.removeEventListener('keydown', onEscHandler);
+			document.removeEventListener('click', closeMenu);
+		};
+	}, [closeMenu, onEscHandler]);
+
+	const onClickHandler = () => {
+		setIsOpen(!isOpen);
+	};
 
 	return (
 		<>
@@ -25,21 +54,9 @@ export const UserMenu = () => {
 				<NavItem to='/phonebook' end>
 					☎️ PHONEBOOK ☎️
 				</NavItem>
-				<NavUserItem>
-					<UserItem>
-						<UserAvatar src={user.avatarURL} />
-						<UserName>{user.name}</UserName>
-					</UserItem>
-					<ButtonLogout
-						type='button'
-						onClick={e => {
-							animationButton(e);
-							dispatch(logOut());
-						}}
-					>
-						Logout
-					</ButtonLogout>
-				</NavUserItem>
+
+				<UserAvatar id='avatar_menu' onClick={onClickHandler} src={user.avatarURL} />
+				{isOpen && <Menu onClickHandler={onClickHandler} />}
 			</NavMenu>
 		</>
 	);

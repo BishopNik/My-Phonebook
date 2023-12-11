@@ -3,8 +3,8 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = 'https://nodejs-rest-api-8x2z.onrender.com/';
-// axios.defaults.baseURL = 'http://localhost:4000';
+// axios.defaults.baseURL = 'https://nodejs-rest-api-8x2z.onrender.com/';
+axios.defaults.baseURL = 'http://localhost:4000';
 
 // Utility to add JWT
 const setAuthHeader = token => {
@@ -70,6 +70,51 @@ export const refreshUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) 
 export const resendEmail = createAsyncThunk('auth/verify', async (credentials, thunkAPI) => {
 	try {
 		await axios.post('/api/auth/verify', credentials);
+	} catch ({ response }) {
+		return thunkAPI.rejectWithValue(response?.data?.message);
+	}
+});
+
+export const changeAvatar = createAsyncThunk('auth/avatar', async (credentials, thunkAPI) => {
+	try {
+		const res = await axios.patch('/api/auth/avatar', credentials);
+		return res.data;
+	} catch ({ response }) {
+		return thunkAPI.rejectWithValue(response?.data?.message);
+	}
+});
+
+export const deleteUser = createAsyncThunk('auth/delete', async (credentials, thunkAPI) => {
+	try {
+		await axios.post('/api/auth/delete', credentials);
+		clearAuthHeader();
+	} catch ({ response }) {
+		return thunkAPI.rejectWithValue(response?.data?.message);
+	}
+});
+
+export const changeName = createAsyncThunk('auth/name', async (credentials, thunkAPI) => {
+	try {
+		const res = await axios.patch('/api/auth/name', credentials);
+		return res.data;
+	} catch ({ response }) {
+		return thunkAPI.rejectWithValue(response?.data?.message);
+	}
+});
+
+export const changePassword = createAsyncThunk('auth/pass', async (credentials, thunkAPI) => {
+	try {
+		const res = await axios.patch('/api/auth/pass', credentials);
+		setAuthHeader(res.data.token);
+		return res.data;
+	} catch ({ response }) {
+		return thunkAPI.rejectWithValue(response?.data?.message);
+	}
+});
+
+export const resendPassword = createAsyncThunk('auth/repass', async (credentials, thunkAPI) => {
+	try {
+		await axios.post('/api/auth/repass', credentials);
 	} catch ({ response }) {
 		return thunkAPI.rejectWithValue(response?.data?.message);
 	}

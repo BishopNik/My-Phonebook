@@ -11,13 +11,14 @@ import { RestrictedRoute } from './RestrictedRoute';
 import SharedLayout from './SharedLayout';
 import Loader from 'components/Loader';
 import { resetError } from 'redux/auth/authSlice';
-import { toastWindow } from 'components/Helpers';
+import { toastError } from 'components/Helpers';
 
 const Phonebook = lazy(() => import('pages/Phonebook'));
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
 const Verify = lazy(() => import('pages/Verify'));
 const ResendConfirmEmail = lazy(() => import('pages/ResendConfirmEmail'));
+const ChangeSettings = lazy(() => import('pages/ChangeSettings'));
 
 function App() {
 	const dispatch = useDispatch();
@@ -28,7 +29,7 @@ function App() {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (errorUser !== null && errorUser !== 'Unable to fetch user') toastWindow(`${errorUser}`);
+		if (errorUser !== null && errorUser !== 'Unable to fetch user') toastError(`${errorUser}`);
 		dispatch(resetError());
 	}, [dispatch, errorUser]);
 
@@ -39,6 +40,12 @@ function App() {
 			<Routes>
 				<Route path='/' element={<SharedLayout />}>
 					<Route index element={<Login />} />
+					<Route
+						path='/changesettings'
+						element={
+							<PrivateRoute redirectTo='/login' component={<ChangeSettings />} />
+						}
+					/>
 					<Route
 						path='/phonebook'
 						element={<PrivateRoute redirectTo='/login' component={<Phonebook />} />}

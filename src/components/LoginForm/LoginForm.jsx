@@ -3,7 +3,7 @@
 // import React, { useRef } from 'react';
 // import { useDispatch } from 'react-redux';
 // import { Field, reduxForm } from 'redux-form';
-// import { toastWindow } from 'components/Helpers';
+// import { toastError } from 'components/Helpers';
 // import { logIn } from 'redux/auth/operations';
 
 // import { required, maxLength15, minLength7, email, renderField } from 'styled/loginFieldCheck';
@@ -15,7 +15,7 @@
 
 // 	const submitForm = values => {
 // 		if (!values.email || !values.password) {
-//          toastWindow('Please fill out all fields');
+//          toastError('Please fill out all fields');
 // 			return;
 // 		}
 // 		cancelLogin.current = dispatch(
@@ -88,7 +88,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { logIn } from 'redux/auth/operations';
-import { toastWindow } from 'components/Helpers';
+import { toastError } from 'components/Helpers';
 import { useAuth } from 'hooks';
 
 function Copyright(props) {
@@ -112,7 +112,7 @@ const LoginForm = () => {
 
 	const submitForm = values => {
 		if (!values.email || !values.password) {
-			toastWindow('Please fill out all fields');
+			toastError('Please fill out all fields');
 			return;
 		}
 		dispatch(

@@ -24,7 +24,7 @@ export const Container = styled.div`
 
 export const Button = styled.button`
 	border-radius: ${p => p.theme.spacing(2)};
-	font-size: 18px;
+	font-size: 16px;
 	border: 1px solid rgba(0, 0, 0, 0.7);
 	cursor: pointer;
 	box-shadow: 0px 0px 4px 2px rgba(128, 128, 128, 0.5);
@@ -38,9 +38,13 @@ export const Button = styled.button`
 	}
 
 	@media screen and (min-width: 768px) {
-		font-size: 22px;
+		font-size: 20px;
 		min-width: 80px;
 		height: 40px;
+	}
+
+	@media screen and (min-width: 1280px) {
+		font-size: 22px;
 	}
 `;
 
@@ -48,12 +52,14 @@ export const ButtonBox = styled.div`
 	display: flex;
 	justify-content: space-around;
 	margin-top: 35px;
+	gap: 10px;
 `;
 
 export const FormBox = styled.form`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	gap: 20px;
 	padding: 35px 15px;
 	border-radius: 12px;
 	border: 0.5px solid black;
@@ -87,4 +93,100 @@ export const Text = styled.li`
 
 export const Redirect = styled.li`
 	font-size: 12px;
+`;
+
+export const Form = styled.form`
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+	border-radius: ${p => p.theme.spacing(2)};
+	font-size: 16px;
+	border: 1px solid rgba(0, 0, 0, 0.7);
+	box-shadow: 0px 0px 4px 2px rgba(128, 128, 128, 0.5);
+	min-height: 300px;
+
+	@media screen and (min-width: 768px) {
+		font-size: 18px;
+		padding: 20px;
+	}
+
+	@media screen and (min-width: 1280px) {
+		padding: 50px;
+	}
+`;
+
+export const Label = styled.label`
+	font-size: 16px;
+
+	@media screen and (min-width: 768px) {
+		font-size: 18px;
+	}
+
+	@media screen and (min-width: 1280px) {
+		font-size: 22px;
+	}
+`;
+
+export const Input = styled.input`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px;
+	border-radius: ${p => p.theme.spacing(1)};
+	font-size: 16px;
+	border: 1px solid rgba(0, 0, 0, 0.7);
+	cursor: pointer;
+	margin-top: 5px;
+	width: 100%;
+
+	@media screen and (min-width: 768px) {
+		font-size: 18px;
+	}
+
+	@media screen and (min-width: 1280px) {
+		font-size: 22px;
+	}
+`;
+export const FlexBoxMain = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: column;
+	gap: 30px;
+
+	@media screen and (min-width: 768px) {
+		flex-direction: row;
+	}
+`;
+
+export const FlexBoxSection = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+`;
+
+export const FlexBox = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	gap: 4px;
+	border: 1px solid darkslateblue;
+	border-radius: ${p => p.theme.spacing(3)};
+	padding: ${p => p.theme.spacing(3)};
+`;
+
+export const Img = styled.img`
+	width: 180px;
+	height: 180px;
+	object-fit: cover;
+	border-radius: 50%;
+
+	@media screen and (min-width: 768px) {
+		width: 250px;
+		height: 250px;
+		margin-top: 0;
+	}
 `;

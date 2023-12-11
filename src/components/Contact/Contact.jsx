@@ -11,12 +11,14 @@ import {
 	Gender,
 } from './Contact.styled';
 import ModalWindow from 'components/Modal';
-import { animationButton, toastWindow, getGenderIcon } from '../Helpers';
+import ConfirmAction from 'components/ConfirmAction';
+import { animationButton, toastInfo, getGenderIcon } from 'components/Helpers';
 import { fetchDelContact } from 'redux/contacts/fetchApi';
 
 function Contact({ contact }) {
 	const dispatch = useDispatch();
 	const [modalIsOpen, setIsOpen] = useState(false);
+	const [confirmWindowIsOpen, setConfirmWindowIsOpen] = useState(false);
 
 	const { _id, name, email, gender, phone } = contact;
 
@@ -31,11 +33,19 @@ function Contact({ contact }) {
 		setIsOpen(false);
 	};
 
+	const closeModalConfirmwindow = () => {
+		setConfirmWindowIsOpen(false);
+	};
+
 	const handleDeleteContact = e => {
 		animationButton(e);
 		dispatch(fetchDelContact(_id));
-		toastWindow(`Contact deleted.`);
-		if (modalIsOpen) closeModal();
+		toastInfo(`Contact deleted.`);
+		if (modalIsOpen) closeModalConfirmwindow();
+	};
+
+	const openConfirmWindow = () => {
+		setConfirmWindowIsOpen(true);
 	};
 
 	return (
@@ -54,15 +64,21 @@ function Contact({ contact }) {
 					<ContactName>📞 Phone:</ContactName>
 					<ContactNumber>{phone}</ContactNumber>
 				</ContactFiels>
-				<DelButton type='button' onClick={handleDeleteContact}>
+				<DelButton type='button' onClick={openConfirmWindow}>
 					🗑️
 				</DelButton>
 			</CardContact>
 			<ModalWindow
 				modalIsOpen={modalIsOpen}
 				closeModal={closeModal}
-				deleteContact={handleDeleteContact}
+				deleteContact={openConfirmWindow}
 				contact={{ _id, name, phone, email, gender }}
+			/>
+			<ConfirmAction
+				modalIsOpen={confirmWindowIsOpen}
+				closeModal={closeModalConfirmwindow}
+				confirmAction={handleDeleteContact}
+				contact={{ _id }}
 			/>
 		</>
 	);

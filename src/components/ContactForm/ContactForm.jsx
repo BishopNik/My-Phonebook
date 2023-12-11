@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { contactsState, statusLoadingState } from 'redux/contacts/selectors';
 import { fetchPostContact } from 'redux/contacts/fetchApi';
-import { toastWindow, animationButton, checkContact, schema } from '../Helpers';
+import { toastError, animationButton, checkContact, schema } from '../Helpers';
 import {
 	Label,
 	FormikContact,
@@ -28,10 +28,10 @@ function ContactForm({ onSubmitForm }) {
 	};
 
 	const handleAddContact = ({ name, email, phone }) => {
-		const status = checkContact(contacts, name);
+		const status = checkContact(contacts, name, email, phone);
 		if (!status) {
 			cancelAddContact.current = dispatch(fetchPostContact({ name, gender, email, phone }));
-		} else toastWindow(`${name} is already in contacts.`);
+		} else toastError(`${name} is already in contacts.`);
 		return status;
 	};
 
@@ -45,7 +45,7 @@ function ContactForm({ onSubmitForm }) {
 				setGender('other');
 			}
 		} catch (validationErrors) {
-			toastWindow(`Error: ${validationErrors.errors}`);
+			toastError(`Error: ${validationErrors.errors}`);
 		}
 	};
 

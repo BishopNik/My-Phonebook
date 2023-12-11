@@ -13,7 +13,7 @@
 // 	renderField,
 // } from 'styled/loginFieldCheck';
 // import { FormBox, ButtonBox, Button } from 'styled/shared.styled';
-// import { toastWindow } from 'components/Helpers';
+// import { toastError } from 'components/Helpers';
 
 // const RegisterForm = ({ handleSubmit, pristine, reset, submitting }) => {
 // 	const dispatch = useDispatch();
@@ -107,7 +107,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { register } from 'redux/auth/operations';
-import { toastWindow } from 'components/Helpers';
+import { toastError } from 'components/Helpers';
 import Loader from 'components/Loader';
 import { useAuth } from 'hooks';
 
@@ -133,11 +133,11 @@ const RegisterForm = () => {
 
 	const submitForm = async values => {
 		if (!values.email || !values.password || !values.name) {
-			toastWindow('Please fill out all fields');
+			toastError('Please fill out all fields');
 			return;
 		}
 		if (values.password !== values.сonfirm_password) {
-			toastWindow("Passwords don't match");
+			toastError("Passwords don't match");
 			return;
 		}
 		await dispatch(

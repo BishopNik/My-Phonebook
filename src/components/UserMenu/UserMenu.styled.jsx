@@ -37,6 +37,7 @@ export const NavUserItem = styled.div`
 `;
 
 export const NavMenu = styled.nav`
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -97,7 +98,8 @@ export const ButtonLogout = styled.button`
 `;
 
 export const UserAvatar = styled.img`
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 	border-radius: 50%;
+	cursor: pointer;
 `;

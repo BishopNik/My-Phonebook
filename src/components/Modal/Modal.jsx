@@ -19,7 +19,7 @@ import {
 } from './Modal.styled';
 import { Button } from 'styled/shared.styled';
 import { fetchPutContact } from 'redux/contacts/fetchApi';
-import { checkContact, toastWindow, schema, getGenderIcon } from '../Helpers';
+import { checkContact, toastError, schema, getGenderIcon } from 'components/Helpers';
 
 Modal.setAppElement('#modal-root');
 
@@ -109,15 +109,15 @@ const ModalWindow = ({ modalIsOpen, closeModal, deleteContact, contact }) => {
 			.validate(contact)
 			.then(() => {
 				const { _id, name } = contact;
-				const status = checkContact(contacts, name, _id);
+				const status = checkContact(contacts, name, email, phone, _id);
 				if (!status) {
 					setEditEnable(false);
 					cancelPutContact.current = dispatch(fetchPutContact(contact));
 					setCancelEditContact(true);
-				} else toastWindow(`Please change contacts.`);
+				} else toastError(`Please change contacts.`);
 			})
 			.catch(validationErrors => {
-				toastWindow(`Error: ${validationErrors.errors}`);
+				toastError(`Error: ${validationErrors.errors}`);
 			});
 	};
 

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useDebounce } from 'react-use';
 import { useSelector, useDispatch } from 'react-redux';
-import Contact from '../Contact';
+import Contact from 'components/Contact';
 import { ContactContainer, ContactsBox } from './ContactList.styled';
 import { contactsState } from 'redux/contacts/selectors';
 import { filterState } from 'redux/filter/selectors';

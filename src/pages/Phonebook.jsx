@@ -9,14 +9,14 @@ import ContactList from 'components/ContactList';
 import ContactForm from 'components/ContactForm';
 import { TitleName, FormBox } from 'components/App.styled';
 import { Container } from 'styled/shared.styled';
-import { toastWindow } from 'components/Helpers';
+import { toastError } from 'components/Helpers';
 
 function Phonebook() {
 	const error = useSelector(statusError);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (error !== null) toastWindow(`Error loading contacts: ${error}`);
+		if (error !== null) toastError(`Error loading contacts: ${error}`);
 		dispatch(resetError());
 	}, [dispatch, error]);
 

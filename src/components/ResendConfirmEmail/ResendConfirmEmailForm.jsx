@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { resendEmail } from 'redux/auth/operations';
-import { toastWindow } from 'components/Helpers';
+import { toastError } from 'components/Helpers';
 import Loader from 'components/Loader';
 import { useAuth } from 'hooks';
 
@@ -41,7 +41,7 @@ const ResendConfirmEmailForm = () => {
 
 	const submitForm = async values => {
 		if (!values.email) {
-			toastWindow('You must fill in the email field');
+			toastError('You must fill in the email field');
 			return;
 		}
 		await dispatch(
