@@ -11,6 +11,7 @@ import {
 	changeName,
 	changePassword,
 	deleteUser,
+	repairPassword,
 } from './operations';
 
 const initialState = {
@@ -146,6 +147,20 @@ const authSlice = createSlice({
 			})
 			.addCase(deleteUser.rejected, (state, { payload }) => {
 				state.error = 'Delete user error...';
+			})
+			.addCase(repairPassword.pending, state => {
+				state.error = null;
+				state.isRegistering = true;
+				state.isRegistered = false;
+			})
+			.addCase(repairPassword.fulfilled, (state, { payload }) => {
+				state.user = payload.user;
+				state.isRegistering = false;
+				state.isRegistered = true;
+			})
+			.addCase(repairPassword.rejected, (state, { payload }) => {
+				state.isRegistering = false;
+				if (payload) state.error = 'Error change password... Please repead.';
 			});
 	},
 });

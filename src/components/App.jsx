@@ -19,6 +19,8 @@ const Register = lazy(() => import('pages/Register'));
 const Verify = lazy(() => import('pages/Verify'));
 const ResendConfirmEmail = lazy(() => import('pages/ResendConfirmEmail'));
 const ChangeSettings = lazy(() => import('pages/ChangeSettings'));
+const RepairPassword = lazy(() => import('pages/RepairPassword'));
+const UnknownPage = lazy(() => import('pages/UnknownPage'));
 
 function App() {
 	const dispatch = useDispatch();
@@ -73,8 +75,19 @@ function App() {
 							/>
 						}
 					/>
+					<Route
+						path='/repair/:id'
+						element={
+							<RestrictedRoute
+								redirectTo='/phonebook'
+								component={<RepairPassword />}
+							/>
+						}
+					/>
+					<Route path='*' element={<UnknownPage />} />
 				</Route>
 			</Routes>
+
 			<Toaster
 				position='top-right'
 				reverseOrder={false}

@@ -1,7 +1,7 @@
 /** @format */
 
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -37,7 +37,15 @@ const defaultTheme = createTheme();
 const ResendConfirmEmailForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const location = useLocation();
 	const { statusResend, isResend } = useAuth();
+
+	useEffect(() => {
+		if (isResend) navigate('/login');
+	}, [isResend, navigate]);
+
+	const paramsURL = new URLSearchParams(location.search);
+	const reg = paramsURL.get('reg');
 
 	const submitForm = async values => {
 		if (!values.email) {
@@ -47,9 +55,9 @@ const ResendConfirmEmailForm = () => {
 		await dispatch(
 			resendEmail({
 				email: values.email,
+				reg,
 			})
 		);
-		if (isResend) navigate('/login');
 	};
 
 	const handleSubmit = event => {
@@ -59,6 +67,9 @@ const ResendConfirmEmailForm = () => {
 			email: data.get('email'),
 		});
 	};
+
+	const textPage = reg === 'true' ? 'Send recovery message' : 'Resend confirmation email';
+	const textButton = reg === 'true' ? 'Send' : 'Resend';
 
 	return (
 		<ThemeProvider theme={defaultTheme}>
@@ -76,7 +87,7 @@ const ResendConfirmEmailForm = () => {
 						<LocalPostOfficeIcon />
 					</Avatar>
 					<Typography component='h1' variant='h5'>
-						Resend confirmation email
+						{textPage}
 					</Typography>
 					<Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
 						<TextField
@@ -96,7 +107,7 @@ const ResendConfirmEmailForm = () => {
 							variant='contained'
 							sx={{ mt: 3, mb: 2 }}
 						>
-							Resend
+							{textButton}
 						</Button>
 
 						{statusResend ? <Loader /> : null}

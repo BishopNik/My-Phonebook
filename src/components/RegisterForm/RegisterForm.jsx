@@ -92,7 +92,7 @@
 // 	form: 'register',
 // })(RegisterForm);
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
@@ -131,6 +131,10 @@ const RegisterForm = () => {
 	const navigate = useNavigate();
 	const { statusRegistration, statusRegistrationProcess } = useAuth();
 
+	useEffect(() => {
+		if (statusRegistration) navigate('/verify');
+	}, [navigate, statusRegistration]);
+
 	const submitForm = async values => {
 		if (!values.email || !values.password || !values.name) {
 			toastError('Please fill out all fields');
@@ -147,7 +151,6 @@ const RegisterForm = () => {
 				password: values.password,
 			})
 		);
-		if (statusRegistration) navigate('/verify');
 	};
 
 	const handleSubmit = event => {
@@ -233,9 +236,14 @@ const RegisterForm = () => {
 						{statusRegistrationProcess ? <Loader /> : null}
 
 						<Grid container>
-							<Grid item>
-								<Link href='resend' variant='body2'>
+							<Grid item xs>
+								<Link href='resend?reg=false' variant='body2'>
 									{'Resend confirmation email'}
+								</Link>
+							</Grid>
+							<Grid item>
+								<Link href='resend?reg=true' variant='body2'>
+									{'Forgot your password?'}
 								</Link>
 							</Grid>
 						</Grid>

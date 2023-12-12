@@ -112,9 +112,11 @@ export const changePassword = createAsyncThunk('auth/pass', async (credentials, 
 	}
 });
 
-export const resendPassword = createAsyncThunk('auth/repass', async (credentials, thunkAPI) => {
+export const repairPassword = createAsyncThunk('auth/repair', async (credentials, thunkAPI) => {
 	try {
-		await axios.post('/api/auth/repass', credentials);
+		const res = await axios.patch('/api/auth/repair', credentials);
+
+		return res.data;
 	} catch ({ response }) {
 		return thunkAPI.rejectWithValue(response?.data?.message);
 	}

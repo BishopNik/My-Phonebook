@@ -1,6 +1,7 @@
 /** @format */
 
 import styled from 'styled-components';
+import Link from '@mui/material/Link';
 
 export const Container = styled.div`
 	padding: 0 30px;
@@ -189,4 +190,14 @@ export const Img = styled.img`
 		height: 250px;
 		margin-top: 0;
 	}
+`;
+
+export const TextMessage = styled.h1`
+	text-align: center;
+	margin-top: 70px;
+`;
+
+export const LinkHome = styled(Link)`
+	display: flex;
+	justify-content: center;
 `;

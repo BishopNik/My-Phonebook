@@ -186,7 +186,7 @@ const LoginForm = () => {
 								</Link>
 							</Grid>
 							<Grid item>
-								<Link href='resend' variant='body2'>
+								<Link href='resend?reg=true' variant='body2'>
 									{'Forgot your password?'}
 								</Link>
 							</Grid>
