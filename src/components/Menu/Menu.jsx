@@ -42,7 +42,7 @@ const Menu = ({ onClickHandler }) => {
 				<AccountID>{user.id}</AccountID>
 			</User>
 			<UserItem> {user.name}</UserItem>
-			<NavItem onClick={onClickHandler} to='/changesettings' end>
+			<NavItem onClick={onClickHandler} to='/settings' end>
 				Change Setting
 			</NavItem>
 			<Button type='button' onClick={handleOpenConfirmWindow}>

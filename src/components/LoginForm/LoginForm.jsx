@@ -180,9 +180,14 @@ const LoginForm = () => {
 							Sign In
 						</Button>
 						<Grid container>
-							<Grid item>
+							<Grid item xs>
 								<Link href='register' variant='body2'>
 									{"Don't have an account? Sign Up"}
+								</Link>
+							</Grid>
+							<Grid item>
+								<Link href='resend' variant='body2'>
+									{'Forgot your password?'}
 								</Link>
 							</Grid>
 						</Grid>

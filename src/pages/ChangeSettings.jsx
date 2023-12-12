@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Container } from 'styled/shared.styled';
 import { changeAvatar, changeName, changePassword } from 'redux/auth/operations';
-import { toastError, toastInfo } from 'components/Helpers';
+import { toastError } from 'components/Helpers';
 import { useNavigate } from 'react-router-dom';
 import {
 	Button,

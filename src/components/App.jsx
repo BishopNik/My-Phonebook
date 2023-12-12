@@ -41,7 +41,7 @@ function App() {
 				<Route path='/' element={<SharedLayout />}>
 					<Route index element={<Login />} />
 					<Route
-						path='/changesettings'
+						path='/settings'
 						element={
 							<PrivateRoute redirectTo='/login' component={<ChangeSettings />} />
 						}
