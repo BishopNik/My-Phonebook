@@ -42,32 +42,32 @@ function App() {
 			<Routes>
 				<Route path='/' element={<SharedLayout />}>
 					<Route
-						path='/settings'
+						path='phonebook'
+						element={<PrivateRoute redirectTo='/login' component={<Phonebook />} />}
+					/>
+					<Route
+						path='settings'
 						element={
 							<PrivateRoute redirectTo='/login' component={<ChangeSettings />} />
 						}
 					/>
-					<Route
-						path='/phonebook'
-						element={<PrivateRoute redirectTo='/login' component={<Phonebook />} />}
-					/>
 					<Route index element={<Login />} />
 					<Route
-						path='/register'
+						path='register'
 						element={
 							<RestrictedRoute redirectTo='/phonebook' component={<Register />} />
 						}
 					/>
 					<Route
-						path='/login'
+						path='login'
 						element={<RestrictedRoute redirectTo='/phonebook' component={<Login />} />}
 					/>
 					<Route
-						path='/verify'
+						path='verify'
 						element={<RestrictedRoute redirectTo='/phonebook' component={<Verify />} />}
 					/>
 					<Route
-						path='/resend'
+						path='resend'
 						element={
 							<RestrictedRoute
 								redirectTo='/phonebook'
@@ -76,7 +76,7 @@ function App() {
 						}
 					/>
 					<Route
-						path='/repair/:id'
+						path='repair/:id'
 						element={
 							<RestrictedRoute
 								redirectTo='/phonebook'

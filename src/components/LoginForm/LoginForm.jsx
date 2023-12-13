@@ -74,7 +74,7 @@
 // 	form: 'login',
 // })(LoginForm);
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -90,6 +90,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { logIn } from 'redux/auth/operations';
 import { toastError } from 'components/Helpers';
 import { useAuth } from 'hooks';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
 	return (
@@ -108,7 +109,12 @@ const defaultTheme = createTheme();
 
 const LoginForm = () => {
 	const dispatch = useDispatch();
-	const { isLogging } = useAuth();
+	const { isLogging, isLoggedIn } = useAuth();
+	const navigation = useNavigate();
+
+	useEffect(() => {
+		if (isLoggedIn) navigation('phonebook');
+	});
 
 	const submitForm = values => {
 		if (!values.email || !values.password) {
