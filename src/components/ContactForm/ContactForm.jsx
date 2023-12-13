@@ -79,7 +79,6 @@ function ContactForm({ onSubmitForm }) {
 							type='text'
 							name='email'
 							title='Please enter a valid email address.'
-							required
 							autoComplete='off'
 							placeholder='aneta@gmail.com'
 						/>
