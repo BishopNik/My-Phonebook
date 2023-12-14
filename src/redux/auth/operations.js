@@ -3,8 +3,8 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-// axios.defaults.baseURL = 'https://nodejs-rest-api-8x2z.onrender.com/';
-axios.defaults.baseURL = 'http://localhost:4000';
+axios.defaults.baseURL = 'https://nodejs-rest-api-8x2z.onrender.com/';
+// axios.defaults.baseURL = 'http://localhost:4000';
 
 // Utility to add JWT
 const setAuthHeader = token => {
