@@ -11,7 +11,6 @@ import { GlobalStyle } from 'components/Helpers/GlobalStyle';
 import { store, persistor } from './redux/store';
 import 'modern-normalize';
 import { Toaster } from 'react-hot-toast';
-import { Auth0Provider } from '@auth0/auth0-react';
 
 const theme = {
 	spacing: x => `${x * 4}px`,
@@ -22,30 +21,22 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
 				<BrowserRouter basename='/My-Phonebook'>
-					<Auth0Provider
-						domain='bishop.eu.auth0.com'
-						clientId='nKnGPNLE0ODtwFMZmV4Jhza2Xp6Rtjmx'
-						authorizationParams={{
-							redirect_uri: window.location.origin,
-						}}
-					>
-						<ThemeProvider theme={theme}>
-							<App />
-							<Toaster
-								position='top-right'
-								reverseOrder={false}
-								gutter={8}
-								toastOptions={{
-									duration: 5000,
-									style: {
-										background: '#fdfbea',
-										color: '#000000',
-									},
-								}}
-							/>
-							<GlobalStyle />
-						</ThemeProvider>
-					</Auth0Provider>
+					<ThemeProvider theme={theme}>
+						<App />
+						<Toaster
+							position='top-right'
+							reverseOrder={false}
+							gutter={8}
+							toastOptions={{
+								duration: 5000,
+								style: {
+									background: '#fdfbea',
+									color: '#000000',
+								},
+							}}
+						/>
+						<GlobalStyle />
+					</ThemeProvider>
 				</BrowserRouter>
 			</PersistGate>
 		</Provider>
