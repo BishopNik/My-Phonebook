@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Container } from 'styled/shared.styled';
 import { changeAvatar, changeName, changePassword } from 'redux/auth/operations';
-import { toastError } from 'components/Helpers';
+import { toastError, toastInfo } from 'components/Helpers';
 import { useNavigate } from 'react-router-dom';
 import {
 	Button,
@@ -54,6 +54,7 @@ const ChangeAvatar = () => {
 
 			if (newName) {
 				await dispatch(changeName({ name: newName }));
+				toastInfo('Name changed');
 			}
 			if (resultPas !== oldPas) {
 				await dispatch(
@@ -62,11 +63,13 @@ const ChangeAvatar = () => {
 						newPassword: resultPas,
 					})
 				);
+				toastInfo('Password changed');
 			}
 			if (avatar) {
 				const formData = new FormData();
 				formData.append('avatar', avatar, avatar.name);
 				await dispatch(changeAvatar(formData));
+				toastInfo('Avatar changed');
 			}
 			if (resultPas !== oldPas && oldPas !== null) navigate('/phonebook');
 		} catch (error) {
