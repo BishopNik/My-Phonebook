@@ -11,7 +11,7 @@ import { NavMenu, NavItem, UserItem, Button, User, Account, AccountID } from './
 
 const Menu = ({ onClickHandler }) => {
 	const dispatch = useDispatch();
-	const { user } = useAuth();
+	const { user, errorUser } = useAuth();
 	const [confirmWindowIsOpen, setConfirmWindowIsOpen] = useState(false);
 
 	const closeModalConfirmWindow = () => {
@@ -27,8 +27,8 @@ const Menu = ({ onClickHandler }) => {
 		if (confirmWindowIsOpen) closeModalConfirmWindow();
 		const idUser = user.id;
 		await dispatch(logOut());
-		dispatch(deleteUser(idUser));
-		toastInfo(`User deleted.`);
+		await dispatch(deleteUser(idUser));
+		if (!errorUser) toastInfo(`User deleted.`);
 	};
 
 	const logoutHandler = () => {
