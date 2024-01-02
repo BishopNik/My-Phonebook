@@ -84,9 +84,9 @@ export const changeAvatar = createAsyncThunk('auth/avatar', async (credentials, 
 	}
 });
 
-export const deleteUser = createAsyncThunk('auth/delete', async (credentials, thunkAPI) => {
+export const deleteUser = createAsyncThunk('auth/delete', async (id, thunkAPI) => {
 	try {
-		await axios.delete('/api/auth/delete', credentials);
+		await axios.delete(`/api/auth/${id}`);
 		clearAuthHeader();
 	} catch ({ response }) {
 		return thunkAPI.rejectWithValue(response?.data?.message);
