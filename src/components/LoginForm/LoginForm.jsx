@@ -176,15 +176,39 @@ const LoginForm = () => {
 							id='password'
 							autoComplete='current-password'
 						/>
-						<Button
-							disabled={isLogging}
-							type='submit'
-							fullWidth
-							variant='contained'
-							sx={{ mt: 3, mb: 2 }}
-						>
-							Sign In
-						</Button>
+						<div style={{ display: 'flex', gap: '20px' }}>
+							<Button
+								disabled={isLogging}
+								type='submit'
+								variant='contained'
+								sx={{ mt: 3, mb: 2 }}
+								style={{ width: '100%' }}
+							>
+								Sign In
+							</Button>
+							<Button
+								href='http://localhost:4000/api/auth/login'
+								variant='contained'
+								sx={{ mt: 3, mb: 2 }}
+								style={{
+									display: 'inline-flex',
+									gap: '8px',
+									width: '100%',
+									background: 'darkblue',
+								}}
+							>
+								<p style={{ margin: '0' }}>Login with</p>
+								<img
+									src='https://static-00.iconduck.com/assets.00/auth0-icon-512x512-3wef3www.png'
+									loading='lazy'
+									alt='auth0 icon'
+									title='auth0 icon'
+									data-alternate='https://d1rs1tqcxzgl1z.cloudfront.net/iconduck/image/upload/w_614,h_614,c_fit/f_png/e_colorize:0,co_rgb:000000/w_644,h_644,c_lpad/e_trim:1/w_512,h_512,c_fit/s3.prod/assets.00/assta9ya26no'
+									width={25}
+									height={25}
+								/>
+							</Button>
+						</div>
 						<Grid container>
 							<Grid item xs>
 								<Link href='register' variant='body2'>

@@ -15,6 +15,7 @@ import { toastError } from 'components/Helpers';
 
 const Phonebook = lazy(() => import('pages/Phonebook'));
 const Login = lazy(() => import('pages/Login'));
+const SocialAuth = lazy(() => import('pages/SocialAuth'));
 const Register = lazy(() => import('pages/Register'));
 const Verify = lazy(() => import('pages/Verify'));
 const ResendConfirmEmail = lazy(() => import('pages/ResendConfirmEmail'));
@@ -61,6 +62,12 @@ function App() {
 					<Route
 						path='login'
 						element={<RestrictedRoute redirectTo='/phonebook' component={<Login />} />}
+					/>
+					<Route
+						path='social_auth'
+						element={
+							<RestrictedRoute component={<SocialAuth />} redirectTo='/phonebook' />
+						}
 					/>
 					<Route
 						path='verify'

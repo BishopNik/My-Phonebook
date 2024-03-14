@@ -34,6 +34,9 @@ const authSlice = createSlice({
 		resetError: state => {
 			state.error = null;
 		},
+		addToken: (state, { payload }) => {
+			state.token = payload;
+		},
 	},
 	extraReducers: builder => {
 		builder
@@ -167,4 +170,4 @@ const authSlice = createSlice({
 
 export const authReducer = authSlice.reducer;
 
-export const { resetError } = authSlice.actions;
+export const { resetError, addToken } = authSlice.actions;
