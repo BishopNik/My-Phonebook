@@ -113,7 +113,6 @@ const LoginForm = () => {
 	const navigation = useNavigate();
 	const host =
 		process.env.REACT_APP_BASE_BACKEND_URL || 'https://nodejs-rest-api-8x2z.onrender.com';
-	console.log('🚀 ~ LoginForm ~ host:', host);
 
 	useEffect(() => {
 		if (isLoggedIn) navigation('phonebook');
