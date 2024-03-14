@@ -111,6 +111,8 @@ const LoginForm = () => {
 	const dispatch = useDispatch();
 	const { isLogging, isLoggedIn } = useAuth();
 	const navigation = useNavigate();
+	const host = process.env.REACT_APP_BASE_BACKEND_URL;
+	console.log('🚀 ~ LoginForm ~ host:', host);
 
 	useEffect(() => {
 		if (isLoggedIn) navigation('phonebook');
