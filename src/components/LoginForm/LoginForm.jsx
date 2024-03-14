@@ -111,7 +111,8 @@ const LoginForm = () => {
 	const dispatch = useDispatch();
 	const { isLogging, isLoggedIn } = useAuth();
 	const navigation = useNavigate();
-	const host = process.env.REACT_APP_BASE_BACKEND_URL;
+	const host =
+		process.env.REACT_APP_BASE_BACKEND_URL || 'https://nodejs-rest-api-8x2z.onrender.com';
 	console.log('🚀 ~ LoginForm ~ host:', host);
 
 	useEffect(() => {
@@ -189,7 +190,7 @@ const LoginForm = () => {
 								Sign In
 							</Button>
 							<Button
-								href={`${process.env.REACT_APP_BASE_BACKEND_URL}/api/auth/login`}
+								href={`${host}/api/auth/login`}
 								variant='contained'
 								sx={{ mt: 3, mb: 2 }}
 								style={{

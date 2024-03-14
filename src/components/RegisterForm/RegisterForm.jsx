@@ -130,6 +130,8 @@ const RegisterForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { statusRegistration, statusRegistrationProcess } = useAuth();
+	const host =
+		process.env.REACT_APP_BASE_BACKEND_URL || 'https://nodejs-rest-api-8x2z.onrender.com';
 
 	useEffect(() => {
 		if (statusRegistration) navigate('/verify');
@@ -233,7 +235,7 @@ const RegisterForm = () => {
 								Register
 							</Button>
 							<Button
-								href={`${process.env.REACT_APP_BASE_BACKEND_URL}/api/auth/login`}
+								href={`${host}/api/auth/login`}
 								variant='contained'
 								sx={{ mt: 3, mb: 2 }}
 								style={{
