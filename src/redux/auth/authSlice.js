@@ -81,15 +81,15 @@ const authSlice = createSlice({
 			})
 			.addCase(refreshUser.pending, state => {
 				state.isRefreshing = true;
+				state.error = null;
 			})
 			.addCase(refreshUser.fulfilled, (state, { payload }) => {
 				state.user = payload;
 				state.isLoggedIn = true;
 				state.isRefreshing = false;
 			})
-			.addCase(refreshUser.rejected, (state, { payload }) => {
+			.addCase(refreshUser.rejected, state => {
 				state.isRefreshing = false;
-				state.error = payload;
 			})
 			.addCase(resendEmail.pending, state => {
 				state.statusResend = true;
