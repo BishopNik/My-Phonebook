@@ -1,6 +1,5 @@
 /** @format */
 
-import Loader from 'components/Loader';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +29,7 @@ function GoogleAuth() {
 				height: '100vh',
 			}}
 		>
-			<Loader />
+			<p>Redirect to main page...</p>
 		</div>
 	);
 }
