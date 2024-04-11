@@ -26,8 +26,8 @@ const Menu = ({ onClickHandler }) => {
 		onClickHandler();
 		if (confirmWindowIsOpen) closeModalConfirmWindow();
 		const idUser = user.id;
-		await dispatch(logOut());
-		await dispatch(deleteUser(idUser));
+		dispatch(logOut());
+		dispatch(deleteUser(idUser));
 		if (!errorUser) toastInfo(`User deleted.`);
 	};
 
